@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+// biblioteca de notificação Sonner https://sonner.emilkowal.ski/
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,8 +24,30 @@ export function SingIn() {
   } = useForm<SingInFromType>();
 
   async function handleSingIn(data: SingInFromType) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Sing in with data:", data);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Sing in with data:", data);
+
+      toast.success("Enviamos um link de autenticação para seu e-mail.", {
+        duration: 3000,
+        position: "bottom-right",
+        action: {
+          label: "Reenviar",
+          onClick: () => {
+            // Reenviar link de autenticação
+            toast.success("Link de autenticação reenviado.", {
+              duration: 3000,
+              position: "bottom-right",
+            });
+          },
+        },
+      });
+    } catch {
+      toast.error("Insira um e-mail válido para autenticação.", {
+        duration: 3000,
+        position: "bottom-right",
+      });
+    }
   }
 
   return (
