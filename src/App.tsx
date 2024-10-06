@@ -6,7 +6,7 @@ export function App() {
   return (
     <HelmetProvider>
       <Helmet titleTemplate="%s | Controle Financeiro" />
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </HelmetProvider>
   );
 }

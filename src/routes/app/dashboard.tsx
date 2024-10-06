@@ -4,7 +4,7 @@ export function Dashboard() {
   return (
     <>
       <Helmet title="Dashboard" />
-      <h1>Hello Dashboard</h1>;
+      <h1>Hello Dashboard</h1>
     </>
   );
 }
