@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import { AppLayout } from "@/routes/_layouts/app";
 import { AuthLayout } from "@/routes/_layouts/auth";
-import { Dashboard } from "@/routes/app/dashboard";
+import { Dashboard } from "@/routes/app/dashboard/dashboard";
 import { Orders } from "@/routes/app/orders/orders";
 import { SingIn } from "@/routes/auth/sing-in";
 import { SingUp } from "@/routes/auth/sing-up";
