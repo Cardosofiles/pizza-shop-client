@@ -5,34 +5,35 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { registerRestaurant } from "@/api/register-restaurant";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useMutation } from "@tanstack/react-query";
 
-const singUpFromValidation = z.object({
+const signUpFromValidation = z.object({
   restaurantName: z.string(),
   managerName: z.string(),
   phone: z.string(),
   email: z.string().email(),
 });
 
-type SingUpFromType = z.infer<typeof singUpFromValidation>;
+type SignUpFromType = z.infer<typeof signUpFromValidation>;
 
-export function SingUp() {
+export function SignUp() {
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SingUpFromType>();
+  } = useForm<SignUpFromType>();
 
   const { mutateAsync: registerRestaurantFn } = useMutation({
     mutationFn: registerRestaurant,
   });
 
-  async function handleSingUp(data: SingUpFromType) {
+  async function handleSingUp(data: SignUpFromType) {
     try {
       await registerRestaurantFn({
         restaurantName: data.restaurantName,
@@ -46,7 +47,7 @@ export function SingUp() {
         position: "bottom-right",
         action: {
           label: "Login",
-          onClick: () => navigate(`/sing-in?email=${data.email}`),
+          onClick: () => navigate(`/sign-in?email=${data.email}`),
         },
       });
     } catch {
@@ -62,9 +63,12 @@ export function SingUp() {
       <Helmet title="Cadastro" />
 
       <div className="p-8">
-        <Button variant="outline" asChild className="absolute right-4 top-8">
-          <Link to="/sing-in">Fazer login</Link>
-        </Button>
+        <div className="absolute flex items-center gap-2 right-4 top-8">
+          <ThemeToggle />
+          <Button variant="outline" asChild>
+            <Link to="/sign-in">Fazer login</Link>
+          </Button>
+        </div>
         <div className="w-[350px] flex flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">

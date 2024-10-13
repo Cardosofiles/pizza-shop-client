@@ -5,35 +5,36 @@ import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { singIn } from "@/api/sing-in";
+import { signIn } from "@/api/sign-in";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const singInFromValidation = z.object({
+const signInFromValidation = z.object({
   email: z.string().email(),
 });
 
-type SingInFromType = z.infer<typeof singInFromValidation>;
+type SignInFromType = z.infer<typeof signInFromValidation>;
 
-export function SingIn() {
+export function SignIn() {
   const [searchParams] = useSearchParams();
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SingInFromType>({
+  } = useForm<SignInFromType>({
     defaultValues: {
       email: searchParams.get("email") ?? "",
     },
   });
 
   const { mutateAsync: authenticate } = useMutation({
-    mutationFn: singIn,
+    mutationFn: signIn,
   });
 
-  async function handleSingIn(data: SingInFromType) {
+  async function handleSingIn(data: SignInFromType) {
     try {
       await authenticate({ email: data.email });
 
@@ -64,9 +65,12 @@ export function SingIn() {
       <Helmet title="Login" />
 
       <div className="p-8">
-        <Button variant="outline" asChild className="absolute right-4 top-8">
-          <Link to="/sing-up">Novo estabelecimento</Link>
-        </Button>
+        <div className="absolute flex items-center gap-2 right-4 top-8">
+          <ThemeToggle />
+          <Button variant="outline" asChild>
+            <Link to="/sign-up">Novo estabelecimento</Link>
+          </Button>
+        </div>
         <div className="w-[350px] flex flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">

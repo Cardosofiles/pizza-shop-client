@@ -6,7 +6,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import colors from "tailwindcss/colors";
 
 import {
   Card,
@@ -15,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import colors from "tailwindcss/colors";
 
 const data = [
   { date: "10/12", revenue: 1200 },
