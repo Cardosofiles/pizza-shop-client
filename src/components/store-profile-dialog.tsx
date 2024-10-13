@@ -24,7 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const storeProfileSchema = z.object({
   name: z.string().min(1),
-  description: z.string(),
+  description: z.string().nullable(),
 });
 
 type StoreProfileSchema = z.infer<typeof storeProfileSchema>;
@@ -50,22 +50,38 @@ export function StoreProfileDialog() {
     },
   });
 
+  function updateManagedRestaurantCache({
+    name,
+    description,
+  }: StoreProfileSchema) {
+    const cached = queryClinet.getQueryData<GetManagedRestaurantResponse>([
+      "managed-restaurant",
+    ]);
+
+    if (cached) {
+      queryClinet.setQueryData<GetManagedRestaurantResponse>(
+        ["managed-restaurant"],
+        {
+          ...cached,
+          name,
+          description,
+        }
+      );
+    }
+
+    return { cached };
+  }
+
   const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: upadateProfile,
-    onSuccess(_, { name, description }) {
-      const cached = queryClinet.getQueryData<GetManagedRestaurantResponse>([
-        "managed-restaurant",
-      ]);
+    onMutate({ name, description }) {
+      const { cached } = updateManagedRestaurantCache({ name, description });
 
-      if (cached) {
-        queryClinet.setQueryData<GetManagedRestaurantResponse>(
-          ["managed-restaurant"],
-          {
-            ...cached,
-            name,
-            description,
-          }
-        );
+      return { previousProfile: cached };
+    },
+    onError(_, __, context) {
+      if (context?.previousProfile) {
+        updateManagedRestaurantCache(context.previousProfile);
       }
     },
   });
