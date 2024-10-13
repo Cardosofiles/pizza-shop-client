@@ -1,9 +1,9 @@
 import { api } from "@/lib/axios";
 
-interface UadateProfileBody {
+interface UpdateProfileBody {
   name: string;
   description: string | null;
 }
-export async function upadateProfile({ name, description }: UadateProfileBody) {
+export async function upadateProfile({ name, description }: UpdateProfileBody) {
   await api.put("/profile", { name, description });
 }

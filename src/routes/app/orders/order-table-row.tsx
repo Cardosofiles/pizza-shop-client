@@ -1,11 +1,24 @@
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { ArrowRight, Search, X } from "lucide-react";
 
+import { OrderStatus } from "@/components/order-status";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { OrderDetails } from "./order-details";
 
-export function OerderTableRow() {
+export interface OrderTableRowProps {
+  order: {
+    orderId: string;
+    createdAt: string;
+    status: "pending" | "canceled" | "processing" | "delivering" | "delivered";
+    customerName: string;
+    total: number;
+  };
+}
+
+export function OerderTableRow({ order }: OrderTableRowProps) {
   return (
     <TableRow>
       <TableCell>
@@ -22,22 +35,29 @@ export function OerderTableRow() {
       </TableCell>
 
       <TableCell className="font-mono text-xs font-medium">
-        231as32d1as321da
+        {order.orderId}
       </TableCell>
 
-      <TableCell className="text-muted-foreground">Há 15 minutus</TableCell>
-
-      <TableCell className="">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-sky-400" />
-          <span className="text-foreground">Pendente</span>
-        </div>
+      <TableCell className="text-muted-foreground">
+        {formatDistanceToNow(order.createdAt, {
+          locale: ptBR,
+          addSuffix: true,
+        })}
       </TableCell>
 
-      <TableCell className="font-medium">João Batista</TableCell>
+      <TableCell className="">
+        <OrderStatus status={order.status} />
+      </TableCell>
+
+      <TableCell className="font-medium">{order.customerName}</TableCell>
 
       <TableCell className="">
-        <span className="text-sm font-medium text-gray-500">R$ 320,00</span>
+        <span className="text-sm font-medium text-gray-500">
+          {order.total.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </span>
       </TableCell>
 
       <TableCell className="">

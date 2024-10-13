@@ -34,7 +34,7 @@ export function AccountMenu() {
       staleTime: Infinity,
     });
 
-  const { mutateAsync: signUoutFn, isPending: isSigningOut } = useMutation({
+  const { mutateAsync: signOutFn, isPending: isSigningOut } = useMutation({
     mutationFn: signOut,
     onSuccess: () => {
       navigate("/sign-in", { replace: true });
@@ -88,7 +88,7 @@ export function AccountMenu() {
             className="text-rose-500 dark:text-rose-400"
             disabled={isSigningOut}
           >
-            <button className="w-full" onClick={() => signUoutFn()}>
+            <button className="w-full" onClick={() => signOutFn()}>
               <LogOut className="w-4 h-4 mr-2" />
               <span>Sair</span>
             </button>
