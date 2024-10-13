@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -17,11 +17,17 @@ const singInFromValidation = z.object({
 type SingInFromType = z.infer<typeof singInFromValidation>;
 
 export function SingIn() {
+  const [searchParams] = useSearchParams();
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SingInFromType>();
+  } = useForm<SingInFromType>({
+    defaultValues: {
+      email: searchParams.get("email") ?? "",
+    },
+  });
 
   const { mutateAsync: authenticate } = useMutation({
     mutationFn: singIn,
