@@ -56,7 +56,7 @@ export function OerderTableRow({ order }: OrderTableRowProps) {
 
       <TableCell className="">
         <span className="text-sm font-medium text-gray-500">
-          {order.total.toLocaleString("pt-BR", {
+          {(order.total / 100).toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
           })}
