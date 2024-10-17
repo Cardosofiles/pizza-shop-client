@@ -56,7 +56,7 @@ export function Pagination({
 
           <Button
             onClick={() => onPageChange(pageIndex + 1)}
-            disabled={pageIndex <= pageIndex + 1}
+            disabled={pages <= pageIndex + 1}
             variant="outline"
             className="w-8 h-8 p-0"
           >
