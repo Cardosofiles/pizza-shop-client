@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/card";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 import colors from "tailwindcss/colors";
 
 export function RevenueCharts() {
@@ -65,7 +66,7 @@ export function RevenueCharts() {
       </CardHeader>
 
       <CardContent>
-        {chartData && (
+        {chartData ? (
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={chartData} style={{ fontSize: 12 }}>
               <XAxis dataKey="date" tickLine={false} axisLine={false} dy={16} />
@@ -93,6 +94,10 @@ export function RevenueCharts() {
               />
             </LineChart>
           </ResponsiveContainer>
+        ) : (
+          <div className="flex h-[240px] w-full items-center justify-center">
+            <Loader2 className="h-8 w-8 text-muted-foreground animate-spin" />
+          </div>
         )}
       </CardContent>
     </Card>
