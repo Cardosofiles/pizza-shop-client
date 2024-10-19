@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { OrderDetailsSkeleton } from "./order-details-skeleton";
 
 export interface OrderDetailsProps {
   orderId: string;
@@ -43,37 +44,43 @@ export function OrderDetails({ orderId, detailsOpen }: OrderDetailsProps) {
         <DialogDescription>Detalhes do pedido</DialogDescription>
       </DialogHeader>
 
-      {order && (
+      {order ? (
         <div className="space-y-6">
           <Table>
             <TableBody>
               <TableRow>
                 <TableCell className="text-muted-foreground">Status</TableCell>
+
                 <TableCell className="flex justify-end">
                   <OrderStatus status={order.status} />
                 </TableCell>
               </TableRow>
+
               <TableRow>
                 <TableCell className="text-muted-foreground">Cliente</TableCell>
+
                 <TableCell className="flex justify-end">
                   {order.customer.name}
                 </TableCell>
               </TableRow>
+
               <TableRow>
                 <TableCell className="text-muted-foreground">
                   Telefone
                 </TableCell>
+
                 <TableCell className="flex justify-end">
                   {order.customer.phone ?? "Não informado"}
                 </TableCell>
               </TableRow>
+
               <TableRow>
                 <TableCell className="text-muted-foreground">E-mail</TableCell>
                 <TableCell className="flex justify-end">
                   {order.customer.email}
                 </TableCell>
               </TableRow>
-              s
+
               <TableRow>
                 <TableCell className="text-muted-foreground">
                   Realizado há
@@ -143,6 +150,8 @@ export function OrderDetails({ orderId, detailsOpen }: OrderDetailsProps) {
             </TableFooter>
           </Table>
         </div>
+      ) : (
+        <OrderDetailsSkeleton />
       )}
     </DialogContent>
   );
