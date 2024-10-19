@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { subDays } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
 import {
@@ -21,7 +22,6 @@ import {
 } from "@/components/ui/card";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
 import colors from "tailwindcss/colors";
 
 export function RevenueCharts() {
